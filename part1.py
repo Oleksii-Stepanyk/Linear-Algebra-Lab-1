@@ -2,7 +2,6 @@ from matplotlib.axes import Axes
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-import cv2 as cv
 
 YLIM = (-4, 7)
 XLIM = (-4, 7)
@@ -22,9 +21,11 @@ def draw_2d(matrix, color):
         plt.quiver([0] * len(vectors[0]), [0] * len(vectors[1]),vectors[0, :], vectors[1, :],color="#000000",angles="xy",scale_units="xy",scale=1)
         plt.quiver([0] * len(matrix[0]), [0] * len(matrix[1]), matrix[0, :], matrix[1, :], color=color, angles="xy", scale_units="xy", scale=1)
 
-    plt.title(f"""Matrix = {matrix}""")
+    plt.title(f"Matrix = {matrix}")
     plt.xlim(XLIM[0], XLIM[1])
     plt.ylim(YLIM[0], YLIM[1])
+    manager = plt.get_current_fig_manager()
+    manager.resize(1600,900)
     plt.show()
     return 0
 
@@ -37,19 +38,12 @@ def draw_3d(matrix, color):
     ax.plot(vectors_3d[0, :], vectors_3d[1, :], vectors_3d[2, :], color="#000000")
     ax.plot(matrix[0, :], matrix[1, :], matrix[2, :], color)
     
+    plt.title(f"Matrix = {matrix}")
+    manager = plt.get_current_fig_manager()
+    manager.resize(1600,900)
     plt.show()
     return 0
     
-
-def rotate(matrix, angle, color="#0000FF"):
-    angle = np.deg2rad(angle)
-    rotation_matrix = np.array(
-        [[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]]
-    )
-    matrix = np.dot(rotation_matrix, matrix)
-    draw(matrix, color)
-    return matrix
-
 
 def rotate_3d(matrix, angle, axis, color="#0000FF"):
     angle = np.deg2rad(angle)
@@ -61,6 +55,16 @@ def rotate_3d(matrix, angle, axis, color="#0000FF"):
         rotation_matrix = np.array([[np.cos(angle),-np.sin(angle),0],[np.sin(angle),np.cos(angle),0],[0,0,1]])
     matrix = np.dot(rotation_matrix, matrix)
     draw_3d(matrix, color)
+    return matrix
+
+
+def rotate(matrix, angle, color="#0000FF"):
+    angle = np.deg2rad(angle)
+    rotation_matrix = np.array(
+        [[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]]
+    )
+    matrix = np.dot(rotation_matrix, matrix)
+    draw_2d(matrix, color)
     return matrix
 
 
