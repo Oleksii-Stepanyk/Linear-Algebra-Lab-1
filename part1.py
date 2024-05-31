@@ -25,7 +25,7 @@ def draw_2d(matrix, color):
     plt.xlim(XLIM[0], XLIM[1])
     plt.ylim(YLIM[0], YLIM[1])
     manager = plt.get_current_fig_manager()
-    manager.resize(1600,900)
+    manager.resize(1280, 720)
     plt.show()
     return 0
 
@@ -40,7 +40,7 @@ def draw_3d(matrix, color):
     
     plt.title(f"Matrix = {matrix}")
     manager = plt.get_current_fig_manager()
-    manager.resize(1600,900)
+    manager.resize(1280, 720)
     plt.show()
     return 0
     
@@ -68,14 +68,14 @@ def rotate(matrix, angle, color="#0000FF"):
     return matrix
 
 
-def scaling_3d(matrix, scale, color="#008000"):
+def scale_3d(matrix, scale, color="#008000"):
     scale_matrix = np.array([[scale,0, 0], [0, scale,0],[0,0,scale]])
     matrix = np.dot(scale_matrix, matrix)
     draw_3d(matrix, color)
     return matrix
 
 
-def scaling(matrix, scale, color="#008000"):
+def scale(matrix, scale, color="#008000"):
     scale_matrix = np.array([[scale, 0], [0, scale]])
     matrix = np.dot(scale_matrix, matrix)
     draw_2d(matrix, color)
@@ -99,6 +99,8 @@ def mirror(matrix, axis, color="#FFA500"):
         mirror_matrix = np.array([[1, 0], [0, -1]])
     if axis == "y":
         mirror_matrix = np.array([[-1, 0], [0, 1]])
+    if axis == "xy":
+        mirror_matrix = np.array([[-1, 0], [0, -1]])
     matrix = np.dot(mirror_matrix, matrix)
     draw_2d(matrix, color)
     return matrix
@@ -109,6 +111,8 @@ def shear(matrix, axis, shear, color="#00FFFF"):
         shear_matrix = np.array([[1, shear], [0, 1]])
     if axis == "y":
         shear_matrix = np.array([[1, 0], [shear, 1]])
+    if axis == "xy":
+        shear_matrix = np.array([[1, shear], [shear, 1]])
     matrix = np.dot(shear_matrix, matrix)
     draw_2d(matrix, color)
     return matrix
@@ -120,8 +124,8 @@ def transformate(matrix, transformation_matrix, color="#A020F0"):
     return matrix
 
 
-vectors = np.array([[1, 3, 4, 2, 1], [1, 1, 3, 3, 1]])
-vectors_3d = np.array([[1, 3, 4, 2, 1], [1, 1, 3, 3, 1], [1, 1, 1, 1, 1]])
+vectors = np.array([[1, 4, 5, 2, 1], [1, 1, 3, 3, 1]])
+vectors_3d = np.array([[1, 4, 5, 2, 1], [1, 1, 3, 3, 1], [1, 1, 1, 1, 1]])
 
 user_input = input("Switch to objects? Y/N: ").upper()
 if user_input == "Y":
@@ -129,10 +133,10 @@ if user_input == "Y":
 
 mirror(vectors, "x")
 rotate(vectors, 195)
-scaling(vectors, -0.75)
+scale(vectors, -0.75)
 shear(vectors, "y", 0.5)
 transformate(vectors, np.array([[0, 2], [1, 0]]))
 
 rotate_3d(vectors_3d, 180, "x")
-scaling_3d(vectors_3d, 2)
+scale_3d(vectors_3d, 2)
 mirror_3d(vectors_3d, "x")
