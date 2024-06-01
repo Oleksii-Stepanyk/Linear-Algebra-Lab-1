@@ -102,7 +102,7 @@ rotate_image(img, 90)
 scale_image(img, 2)
 transformate_image(img, np.float32([[1, 0, 100], [0, 1, 50]]))
 
-transformate(vectors, np.array([[2, 0, 0], [0, 2, 0]], , dtype = np.float32))
+transformate(vectors, np.array([[2, 0, 0], [0, 2, 0]], dtype = np.float32))
 mirror(vectors, "xy")
 rotate(vectors, 90)
 shear(vectors, "y", 5)

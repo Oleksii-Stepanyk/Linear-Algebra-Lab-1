@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-YLIM = (-4, 7)
-XLIM = (-4, 7)
+YLIM = (-10, 10)
+XLIM = (-10, 10)
 is_object = False
 
 
@@ -140,3 +140,12 @@ transformate(vectors, np.array([[0, 2], [1, 0]]))
 rotate_3d(vectors_3d, 180, "x")
 scale_3d(vectors_3d, 2)
 mirror_3d(vectors_3d, "x")
+
+#Proof that order of operations matters
+vectors = mirror(vectors, "y")
+rotate(vectors, 90)
+
+vectors = np.array([[1, 4, 5, 2, 1], [1, 1, 3, 3, 1]])
+
+vectors = rotate(vectors, 90)
+mirror(vectors, "y")
